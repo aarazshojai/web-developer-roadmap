@@ -1,207 +1,1941 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Roadmap جامع توسعه وب — Light Mode</title>
-  <meta name="description" content="نقشه راه ۳۰ روزه یادگیری توسعه وب از صفر تا پروژه عملی">
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>راهنمای ۳۰ روزه توسعه وب</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap');
+        
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #ec4899;
+            --accent: #06b6d4;
+            --bg: #0f172a;
+            --surface: #1e293b;
+            --surface-light: #334155;
+            --text: #f8fafc;
+            --text-muted: #94a3b8;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --gradient-1: linear-gradient(135deg, #6366f1 0%, #ec4899 100%);
+            --gradient-2: linear-gradient(135deg, #06b6d4 0%, #6366f1 100%);
+            --shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.8;
+            overflow-x: hidden;
+        }
+
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .bg-animation::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 20% 80%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(236, 72, 153, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 40% 40%, rgba(6, 182, 212, 0.1) 0%, transparent 50%);
+            animation: pulse 15s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            50% { transform: scale(1.1) rotate(5deg); }
+        }
+
+        /* Header */
+        header {
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 1rem 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo::before {
+            content: '⚡';
+            -webkit-text-fill-color: #fbbf24;
+            font-size: 1.8rem;
+        }
+
+        .progress-bar {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            background: var(--surface);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .progress-text {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
+
+        .progress-fill {
+            width: 150px;
+            height: 6px;
+            background: var(--surface-light);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .progress-fill-inner {
+            height: 100%;
+            background: var(--gradient-1);
+            width: 0%;
+            transition: width 0.5s ease;
+            border-radius: 3px;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 4rem 0;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(99, 102, 241, 0.2);
+            color: var(--primary);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .hero h1 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 800;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .hero h1 span {
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            color: var(--text-muted);
+            font-size: 1.125rem;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            flex-wrap: wrap;
+            margin-top: 3rem;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: var(--gradient-2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .stat-label {
+            color: var(--text-muted);
+            font-size: 0.875rem;
+        }
+
+        /* Navigation Tabs */
+        .tabs-container {
+            position: sticky;
+            top: 80px;
+            z-index: 90;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .tabs {
+            display: flex;
+            gap: 0.5rem;
+            overflow-x: auto;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            padding-bottom: 0.5rem;
+        }
+
+        .tabs::-webkit-scrollbar {
+            display: none;
+        }
+
+        .tab {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-muted);
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: 600;
+            white-space: nowrap;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .tab:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text);
+        }
+
+        .tab.active {
+            background: var(--gradient-1);
+            border-color: transparent;
+            color: white;
+            box-shadow: 0 10px 20px -5px rgba(99, 102, 241, 0.4);
+        }
+
+        .tab-icon {
+            font-size: 1.2rem;
+        }
+
+        /* Content Sections */
+        .content-section {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Cards */
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .section-subtitle {
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .card {
+            background: var(--surface);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--gradient-1);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+            border-color: rgba(99, 102, 241, 0.3);
+        }
+
+        .card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .card-icon {
+            width: 48px;
+            height: 48px;
+            background: rgba(99, 102, 241, 0.2);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .card-title {
+            font-size: 1.125rem;
+            font-weight: 700;
+        }
+
+        .card-badge {
+            display: inline-block;
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--success);
+            padding: 0.25rem 0.75rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+
+        .card-badge.persian {
+            background: rgba(245, 158, 11, 0.2);
+            color: var(--warning);
+        }
+
+        .card p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .card-links {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .link {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 500;
+            padding: 0.5rem;
+            border-radius: 8px;
+            transition: all 0.2s;
+        }
+
+        .link:hover {
+            background: rgba(99, 102, 241, 0.1);
+            padding-right: 1rem;
+        }
+
+        .link::after {
+            content: '←';
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .link:hover::after {
+            opacity: 1;
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding-right: 2rem;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--primary), var(--secondary));
+        }
+
+        .week {
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .week-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            cursor: pointer;
+            padding: 1rem;
+            background: var(--surface);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s;
+        }
+
+        .week-header:hover {
+            background: var(--surface-light);
+        }
+
+        .week-number {
+            width: 40px;
+            height: 40px;
+            background: var(--gradient-1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .week-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        .week-goal {
+            color: var(--text-muted);
+            font-size: 0.875rem;
+        }
+
+        .days {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .day {
+            background: var(--surface);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 1.25rem;
+            margin-right: 1rem;
+            position: relative;
+            transition: all 0.3s;
+        }
+
+        .day::before {
+            content: '';
+            position: absolute;
+            right: -1.5rem;
+            top: 1.5rem;
+            width: 12px;
+            height: 12px;
+            background: var(--surface);
+            border: 3px solid var(--primary);
+            border-radius: 50%;
+        }
+
+        .day:hover {
+            border-color: rgba(99, 102, 241, 0.3);
+            transform: translateX(-5px);
+        }
+
+        .day-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .day-number {
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .day-time {
+            background: rgba(6, 182, 212, 0.2);
+            color: var(--accent);
+            padding: 0.25rem 0.75rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .day-tasks {
+            list-style: none;
+            margin-bottom: 1rem;
+        }
+
+        .day-tasks li {
+            padding: 0.5rem 0;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .day-tasks li::before {
+            content: '✓';
+            color: var(--success);
+            font-weight: bold;
+        }
+
+        .day-resources {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .resource-tag {
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--primary);
+            padding: 0.25rem 0.75rem;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .resource-tag:hover {
+            background: rgba(99, 102, 241, 0.2);
+        }
+
+        /* Checklist */
+        .checklist {
+            background: var(--surface);
+            border-radius: 16px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            cursor: pointer;
+            transition: all 0.2s;
+            user-select: none;
+        }
+
+        .checklist-item:last-child {
+            border-bottom: none;
+        }
+
+        .checklist-item:hover {
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 8px;
+        }
+
+        .checkbox {
+            width: 24px;
+            height: 24px;
+            border: 2px solid var(--surface-light);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            flex-shrink: 0;
+        }
+
+        .checklist-item.checked .checkbox {
+            background: var(--success);
+            border-color: var(--success);
+        }
+
+        .checklist-item.checked .checkbox::after {
+            content: '✓';
+            color: white;
+            font-weight: bold;
+        }
+
+        .checklist-text {
+            flex: 1;
+        }
+
+        .checklist-item.checked .checklist-text {
+            text-decoration: line-through;
+            color: var(--text-muted);
+        }
+
+        /* Tips Section */
+        .tips-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .tip-card {
+            background: linear-gradient(135deg, var(--surface) 0%, rgba(99, 102, 241, 0.1) 100%);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            border-radius: 16px;
+            padding: 1.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tip-number {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            font-size: 4rem;
+            font-weight: 800;
+            color: rgba(99, 102, 241, 0.1);
+            line-height: 1;
+        }
+
+        .tip-card h3 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            font-size: 1.125rem;
+        }
+
+        .tip-card p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 3rem 0;
+            color: var(--text-muted);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 4rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--text);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-stats {
+                gap: 2rem;
+            }
+            
+            .grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .tabs {
+                gap: 0.25rem;
+            }
+            
+            .tab {
+                padding: 0.5rem 1rem;
+                font-size: 0.875rem;
+            }
+            
+            .timeline {
+                padding-right: 1rem;
+            }
+            
+            .day {
+                margin-right: 0.5rem;
+            }
+            
+            .day::before {
+                right: -1.25rem;
+            }
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--surface-light);
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary);
+        }
+
+        /* Print styles */
+        @media print {
+            .tabs-container, header, .bg-animation {
+                display: none;
+            }
+            
+            .content-section {
+                display: block !important;
+                page-break-after: always;
+            }
+        }
+    </style>
 </head>
 <body>
+    <div class="bg-animation"></div>
 
-<!-- ================= HEADER ================= -->
-<header class="header">
-  <div class="container header-inner">
-    <div class="brand">
-      <span class="logo-icon">⚡</span>
-      <span class="logo-text">مسیر توسعه وب</span>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">مسیر توسعه‌دهنده</div>
+                <div class="progress-bar">
+                    <span class="progress-text">پیشرفت شما</span>
+                    <div class="progress-fill">
+                        <div class="progress-fill-inner" id="progressBar"></div>
+                    </div>
+                    <span id="progressText">0%</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-badge">
+                <span>🚀</span>
+                <span>برنامهٔ عملیاتی ۳۰ روزه</span>
+            </div>
+            <h1>از صفر تا <span>توسعه‌دهنده وب</span></h1>
+            <p>راهنمای جامع یادگیری برنامه‌نویسی وب با منابع دسته‌بندی‌شده، برنامهٔ روزانه و ابزارهای کاربردی</p>
+            
+            <div class="hero-stats">
+                <div class="stat">
+                    <div class="stat-number">۳۰</div>
+                    <div class="stat-label">روز برنامه‌ریزی‌شده</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">۷+</div>
+                    <div class="stat-label">حوزهٔ تخصصی</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">۵۰+</div>
+                    <div class="stat-label">منبع آموزشی</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="tabs-container">
+        <div class="container">
+            <div class="tabs">
+                <button class="tab active" onclick="switchTab('resources')">
+                    <span class="tab-icon">📚</span>
+                    <span>منابع آموزشی</span>
+                </button>
+                <button class="tab" onclick="switchTab('packages')">
+                    <span class="tab-icon">📦</span>
+                    <span>پکیج‌های پیشنهادی</span>
+                </button>
+                <button class="tab" onclick="switchTab('daily')">
+                    <span class="tab-icon">📅</span>
+                    <span>برنامهٔ ۳۰ روزه</span>
+                </button>
+                <button class="tab" onclick="switchTab('checklist')">
+                    <span class="tab-icon">✅</span>
+                    <span>چک‌لیست</span>
+                </button>
+                <button class="tab" onclick="switchTab('tips')">
+                    <span class="tab-icon">💡</span>
+                    <span>نکات طلایی</span>
+                </button>
+            </div>
+        </div>
     </div>
 
-    <div class="progress-wrapper">
-      <span class="progress-label">پیشرفت</span>
-      <div class="progress-bar">
-        <div id="progressFill"></div>
-      </div>
-      <span id="progressText">0%</span>
-    </div>
-  </div>
-</header>
+    <main class="container">
+        <!-- Resources Section -->
+        <section id="resources" class="content-section active">
+            <h2 class="section-title"><span>📚</span>منابع رسمی و آموزشی</h2>
+            <p class="section-subtitle">بر اساس موضوع — خارجی + ایران</p>
 
-<!-- ================= HERO ================= -->
-<section class="hero container">
-  <span class="hero-badge">🚀 برنامه عملیاتی ۳۰ روزه</span>
-  <h1>
-    از صفر مطلق تا
-    <span class="highlight">Web Developer</span>
-  </h1>
-  <p class="hero-desc">
-    این نقشه راه برای کسی طراحی شده که می‌خواهد بدون سردرگمی،
-    قدم‌به‌قدم و پروژه‌محور وارد دنیای توسعه وب شود.
-  </p>
+            <h3 style="margin: 2rem 0 1rem; color: var(--accent);">HTML & ساختار صفحات</h3>
+            <div class="grid">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">🌐</div>
+                        <div class="card-title">MDN Web Docs</div>
+                    </div>
+                    <span class="card-badge">رسمی</span>
+                    <p>راهنمای رسمی و کامل Mozilla برای ساختاردهی محتوا با HTML</p>
+                    <div class="card-links">
+                        <a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Structuring_content" class="link" target="_blank">مشاهدهٔ راهنما</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">🎓</div>
+                        <div class="card-title">freeCodeCamp</div>
+                    </div>
+                    <span class="card-badge">پروژه‌محور</span>
+                    <p>مجموعهٔ پروژه‌محور عالی برای شروع یادگیری HTML و CSS</p>
+                    <div class="card-links">
+                        <a href="https://www.freecodecamp.org/news/html-and-css-course/" class="link" target="_blank">دورهٔ HTML/CSS</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">🇮🇷</div>
+                        <div class="card-title">مکتب‌خونه / فرادرس</div>
+                    </div>
+                    <span class="card-badge persian">فارسی</span>
+                    <p>دوره‌های مقدماتی HTML/CSS به زبان فارسی</p>
+                    <div class="card-links">
+                        <a href="https://maktabkhooneh.org" class="link" target="_blank">مکتب‌خونه</a>
+                        <a href="https://faradars.org" class="link" target="_blank">فرادرس</a>
+                    </div>
+                </div>
+            </div>
 
-  <div class="hero-stats">
-    <div class="stat">
-      <strong>۳۰</strong>
-      <span>روز یادگیری</span>
-    </div>
-    <div class="stat">
-      <strong>۶+</strong>
-      <span>مهارت اصلی</span>
-    </div>
-    <div class="stat">
-      <strong>۱</strong>
-      <span>پروژه نهایی</span>
-    </div>
-  </div>
-</section>
+            <h3 style="margin: 2rem 0 1rem; color: var(--accent);">CSS — Flexbox / Grid / Responsive</h3>
+            <div class="grid">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">📐</div>
+                        <div class="card-title">MDN Flexbox</div>
+                    </div>
+                    <span class="card-badge">مرجع</span>
+                    <p>راهنمای جامع Flexbox برای چیدمان مدرن</p>
+                    <div class="card-links">
+                        <a href="https://developer.mozilla.org/docs/Web/CSS/CSS_Flexible_Box_Layout/Basic_Concepts" class="link" target="_blank">راهنمای Flexbox</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">🎯</div>
+                        <div class="card-title">MDN Grid</div>
+                    </div>
+                    <span class="card-badge">مرجع</span>
+                    <p>راهنمای Grid Layout برای طراحی‌های پیچیده</p>
+                    <div class="card-links">
+                        <a href="https://developer.mozilla.org/docs/Web/CSS/CSS_Grid_Layout" class="link" target="_blank">راهنمای Grid</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">🎨</div>
+                        <div class="card-title">freeCodeCamp CSS</div>
+                    </div>
+                    <span class="card-badge">تمرین</span>
+                    <p>پروژه و تمرین‌های عملی CSS</p>
+                    <div class="card-links">
+                        <a href="https://www.freecodecamp.org/news/learn-css/" class="link" target="_blank">یادگیری CSS</a>
+                    </div>
+                </div>
+            </div>
 
-<!-- ================= TABS ================= -->
-<nav class="tabs container">
-  <button class="tab active" data-target="resources">📚 منابع</button>
-  <button class="tab" data-target="packages">📦 پکیج‌ها</button>
-  <button class="tab" data-target="plan">📅 برنامه ۳۰ روزه</button>
-  <button class="tab" data-target="checklist">✅ چک‌لیست</button>
-  <button class="tab" data-target="tips">💡 نکات طلایی</button>
-</nav>
+            <h3 style="margin: 2rem 0 1rem; color: var(--accent);">JavaScript</h3>
+            <div class="grid">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">⚡</div>
+                        <div class="card-title">MDN JavaScript</div>
+                    </div>
+                    <span class="card-badge">مرجع اصلی</span>
+                    <p>راهنمای جامع JavaScript از مبتدی تا پیشرفته</p>
+                    <div class="card-links">
+                        <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide" class="link" target="_blank">راهنمای JS</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">🎓</div>
+                        <div class="card-title">freeCodeCamp JS</div>
+                    </div>
+                    <span class="card-badge">تمرین‌محور</span>
+                    <p>دورهٔ تعاملی JavaScript با پروژه‌های واقعی</p>
+                    <div class="card-links">
+                        <a href="https://www.freecodecamp.org/learn/javascript-v9" class="link" target="_blank">دورهٔ JS</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">🇮🇷</div>
+                        <div class="card-title">راکت / تاپ‌لرن</div>
+                    </div>
+                    <span class="card-badge persian">فارسی</span>
+                    <p>دوره‌های پروژه‌محور JavaScript</p>
+                    <div class="card-links">
+                        <a href="https://roocket.ir" class="link" target="_blank">راکت</a>
+                        <a href="https://toplearn.com" class="link" target="_blank">تاپ‌لرن</a>
+                    </div>
+                </div>
+            </div>
 
-<main class="container">
+            <h3 style="margin: 2rem 0 1rem; color: var(--accent);">React و فرانت‌اند پیشرفته</h3>
+            <div class="grid">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">⚛️</div>
+                        <div class="card-title">React Docs</div>
+                    </div>
+                    <span class="card-badge">رسمی</span>
+                    <p>مستندات رسمی React با Quick Start و آموزش Tic-Tac-Toe</p>
+                    <div class="card-links">
+                        <a href="https://react.dev/learn" class="link" target="_blank">شروع سریع</a>
+                        <a href="https://react.dev/learn/tutorial-tic-tac-toe" class="link" target="_blank">آموزش بازی</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">🎥</div>
+                        <div class="card-title">freeCodeCamp React</div>
+                    </div>
+                    <span class="card-badge">ویدیویی</span>
+                    <p>دورهٔ ویدیویی پروژه‌محور React</p>
+                    <div class="card-links">
+                        <a href="https://www.freecodecamp.org/news/learn-react-course/" class="link" target="_blank">دورهٔ React</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">🇮🇷</div>
+                        <div class="card-title">منابع فارسی</div>
+                    </div>
+                    <span class="card-badge persian">فارسی</span>
+                    <p>دوره‌های رایگان و پولی React به فارسی</p>
+                    <div class="card-links">
+                        <a href="https://roocket.ir/series/learn-react-js/" class="link" target="_blank">راکت</a>
+                        <a href="https://maktabkhooneh.org" class="link" target="_blank">مکتب‌خونه</a>
+                    </div>
+                </div>
+            </div>
 
-<!-- ================= RESOURCES ================= -->
-<section id="resources" class="section active">
-  <h2 class="section-title">📚 منابع آموزشی منتخب</h2>
-  <p class="section-desc">
-    این منابع بر اساس کیفیت، رایگان بودن و کاربرد عملی انتخاب شده‌اند.
-  </p>
+            <h3 style="margin: 2rem 0 1rem; color: var(--accent);">بک‌اند و دیتابیس</h3>
+            <div class="grid">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">🟢</div>
+                        <div class="card-title">Node.js & Express</div>
+                    </div>
+                    <span class="card-badge">رسمی</span>
+                    <p>مستندات Express.js برای ساخت API</p>
+                    <div class="card-links">
+                        <a href="https://expressjs.com/" class="link" target="_blank">مستندات Express</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">🗄️</div>
+                        <div class="card-title">SQLite</div>
+                    </div>
+                    <span class="card-badge">سبک</span>
+                    <p>دیتابیس سبک برای پروژه‌های کوچک</p>
+                    <div class="card-links">
+                        <a href="https://www.sqlite.org/docs.html" class="link" target="_blank">مستندات SQLite</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">🐘</div>
+                        <div class="card-title">PostgreSQL</div>
+                    </div>
+                    <span class="card-badge">حرفه‌ای</span>
+                    <p>دیتابیس پیشرفته برای پروژه‌های بزرگ</p>
+                    <div class="card-links">
+                        <a href="https://www.postgresql.org/docs/" class="link" target="_blank">مستندات PostgreSQL</a>
+                    </div>
+                </div>
+            </div>
 
-  <h3 class="sub-title">HTML & CSS</h3>
-  <div class="grid">
-    <div class="card">
-      <h4>MDN Web Docs</h4>
-      <p>مرجع رسمی و استاندارد وب</p>
-      <a href="https://developer.mozilla.org" target="_blank">مشاهده</a>
-    </div>
+            <h3 style="margin: 2rem 0 1rem; color: var(--accent);">ابزارها و دیپلوی</h3>
+            <div class="grid">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">☁️</div>
+                        <div class="card-title">محیط ابری</div>
+                    </div>
+                    <span class="card-badge">رایگان</span>
+                    <p>ابزارهای کدنویسی در مرورگر برای لپ‌تاپ ضعیف</p>
+                    <div class="card-links">
+                        <a href="https://replit.com/" class="link" target="_blank">Replit</a>
+                        <a href="https://codesandbox.io/" class="link" target="_blank">CodeSandbox</a>
+                        <a href="https://colab.google/" class="link" target="_blank">Google Colab</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">🚀</div>
+                        <div class="card-title">دیپلوی</div>
+                    </div>
+                    <span class="card-badge">رایگان</span>
+                    <p>هاستینگ رایگان برای پروژه‌ها</p>
+                    <div class="card-links">
+                        <a href="https://docs.netlify.com/" class="link" target="_blank">Netlify</a>
+                        <a href="https://vercel.com/docs" class="link" target="_blank">Vercel</a>
+                        <a href="https://formspree.io/help" class="link" target="_blank">Formspree</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">🎨</div>
+                        <div class="card-title">طراحی UI</div>
+                    </div>
+                    <span class="card-badge">ضروری</span>
+                    <p>ابزار طراحی رابط کاربری</p>
+                    <div class="card-links">
+                        <a href="https://www.figma.com/" class="link" target="_blank">Figma</a>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-    <div class="card">
-      <h4>freeCodeCamp</h4>
-      <p>یادگیری پروژه‌محور و تعاملی</p>
-      <a href="https://freecodecamp.org" target="_blank">مشاهده</a>
-    </div>
-  </div>
+        <!-- Packages Section -->
+        <section id="packages" class="content-section">
+            <h2 class="section-title"><span>📦</span>پکیج‌های پیشنهادی</h2>
+            <p class="section-subtitle">هر پکیج برای سطح خاصی طراحی شده — یکی‌شان رایگان و پروژه‌محور</p>
 
-  <h3 class="sub-title">JavaScript</h3>
-  <div class="grid">
-    <div class="card">
-      <h4>javascript.info</h4>
-      <p>آموزش عمیق و مفهومی جاوااسکریپت</p>
-      <a href="https://javascript.info" target="_blank">مشاهده</a>
-    </div>
+            <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));">
+                <div class="card" style="border-top: 4px solid var(--success);">
+                    <div class="card-header">
+                        <div class="card-icon" style="background: rgba(16, 185, 129, 0.2);">🎯</div>
+                        <div>
+                            <div class="card-title">پکیج A — رایگان و سریع</div>
+                            <div style="font-size: 0.875rem; color: var(--text-muted);">شروع از صفر → آماده‌سازی لندینگ</div>
+                        </div>
+                    </div>
+                    <span class="card-badge" style="background: rgba(16, 185, 129, 0.2); color: var(--success);">پیشنهاد ویژه</span>
+                    <ul style="margin: 1rem 0; padding-right: 1.5rem; color: var(--text-muted);">
+                        <li>freeCodeCamp HTML/CSS</li>
+                        <li>freeCodeCamp JavaScript (تعاملی)</li>
+                        <li>freeCodeCamp React (مقدماتی)</li>
+                    </ul>
+                    <div class="card-links">
+                        <a href="https://www.freecodecamp.org" class="link" target="_blank">شروع یادگیری</a>
+                    </div>
+                </div>
 
-    <div class="card">
-      <h4>YouTube (Traversy)</h4>
-      <p>آموزش ویدیویی پروژه‌محور</p>
-      <a href="https://youtube.com" target="_blank">مشاهده</a>
-    </div>
-  </div>
-</section>
+                <div class="card" style="border-top: 4px solid var(--primary);">
+                    <div class="card-header">
+                        <div class="card-icon" style="background: rgba(99, 102, 241, 0.2);">🛠️</div>
+                        <div>
+                            <div class="card-title">پکیج B — ساخت محصول</div>
+                            <div style="font-size: 0.875rem; color: var(--text-muted);">فول‌استک پایه</div>
+                        </div>
+                    </div>
+                    <span class="card-badge">پروژه‌محور</span>
+                    <ul style="margin: 1rem 0; padding-right: 1.5rem; color: var(--text-muted);">
+                        <li>React docs (آموزش)</li>
+                        <li>Express docs</li>
+                        <li>SQLite quickstart</li>
+                        <li>Deploy on Netlify/Vercel</li>
+                    </ul>
+                    <div class="card-links">
+                        <a href="https://react.dev/learn" class="link" target="_blank">React</a>
+                        <a href="https://expressjs.com/" class="link" target="_blank">Express</a>
+                    </div>
+                </div>
 
-<!-- ================= PACKAGES ================= -->
-<section id="packages" class="section">
-  <h2 class="section-title">📦 پکیج‌های پیشنهادی یادگیری</h2>
+                <div class="card" style="border-top: 4px solid var(--warning);">
+                    <div class="card-header">
+                        <div class="card-icon" style="background: rgba(245, 158, 11, 0.2);">🇮🇷</div>
+                        <div>
+                            <div class="card-title">پکیج C — فارسی/پروژه‌محور</div>
+                            <div style="font-size: 0.875rem; color: var(--text-muted);">ویدیوهای فارسی</div>
+                        </div>
+                    </div>
+                    <span class="card-badge persian">فارسی</span>
+                    <ul style="margin: 1rem 0; padding-right: 1.5rem; color: var(--text-muted);">
+                        <li>Roocket (React مقدماتی)</li>
+                        <li>Maktabkhooneh (React/Node)</li>
+                        <li>Faradars (پروژه‌محور)</li>
+                    </ul>
+                    <div class="card-links">
+                        <a href="https://roocket.ir/" class="link" target="_blank">راکت</a>
+                        <a href="https://maktabkhooneh.org" class="link" target="_blank">مکتب‌خونه</a>
+                    </div>
+                </div>
+            </div>
 
-  <div class="grid">
-    <div class="card">
-      <h3>پکیج A — رایگان</h3>
-      <ul>
-        <li>HTML + CSS (MDN)</li>
-        <li>JavaScript (freeCodeCamp)</li>
-        <li>پروژه Landing Page</li>
-      </ul>
-    </div>
+            <div class="tip-card" style="margin-top: 2rem;">
+                <div class="tip-number">💡</div>
+                <h3>پیشنهاد ما</h3>
+                <p>برای شروع از <strong>پکیج A (رایگان)</strong> + یک دورهٔ فارسی کوتاه (Roocket یا Toplearn) برای تسریع در UI/React استفاده کن.</p>
+            </div>
+        </section>
 
-    <div class="card">
-      <h3>پکیج B — پروژه‌محور</h3>
-      <ul>
-        <li>JavaScript پیشرفته</li>
-        <li>API و Fetch</li>
-        <li>پروژه ToDo App</li>
-      </ul>
-    </div>
-  </div>
-</section>
+        <!-- Daily Plan Section -->
+        <section id="daily" class="content-section">
+            <h2 class="section-title"><span>📅</span>راهنمای ۳۰ روزه</h2>
+            <p class="section-subtitle">برای هر روز: هدف کوتاه — قدم‌های انجام‌شدنی — منابع</p>
 
-<!-- ================= 30 DAYS PLAN ================= -->
-<section id="plan" class="section">
-  <h2 class="section-title">📅 برنامه جامع ۳۰ روزه</h2>
+            <div class="timeline">
+                <div class="week">
+                    <div class="week-header" onclick="toggleWeek(this)">
+                        <div class="week-number">۱</div>
+                        <div>
+                            <div class="week-title">هفتهٔ اول — پایه‌ها</div>
+                            <div class="week-goal">هدف: منتشر شدن اولین لندینگ ساده</div>
+                        </div>
+                    </div>
+                    <div class="days">
+                        <div class="day">
+                            <div class="day-header">
+                                <span class="day-number">روز ۱</span>
+                                <span class="day-time">۱ ساعت</span>
+                            </div>
+                            <h4 style="margin-bottom: 0.5rem;">راه‌اندازی ابزارها</h4>
+                            <ul class="day-tasks">
+                                <li>ساخت حساب GitHub</li>
+                                <li>ساخت حساب Figma</li>
+                                <li>ایجاد پروژه در Replit</li>
+                            </ul>
+                            <div class="day-resources">
+                                <a href="https://docs.github.com/get-started/quickstart/hello-world" class="resource-tag" target="_blank">GitHub</a>
+                            </div>
+                        </div>
 
-  <div class="timeline">
-    <div class="day">روز ۱ — آشنایی با وب و ابزارها</div>
-    <div class="day">روز ۲ — HTML پایه</div>
-    <div class="day">روز ۳ — HTML پیشرفته</div>
-    <div class="day">روز ۴ — CSS پایه</div>
-    <div class="day">روز ۵ — Flexbox</div>
-    <div class="day">روز ۶ — Grid</div>
-    <div class="day">روز ۷ — پروژه هفته اول</div>
+                        <div class="day">
+                            <div class="day-header">
+                                <span class="day-number">روز ۲</span>
+                                <span class="day-time">۱ ساعت</span>
+                            </div>
+                            <h4 style="margin-bottom: 0.5rem;">HTML پایه</h4>
+                            <ul class="day-tasks">
+                                <li>ساخت فایل index.html</li>
+                                <li>نوشتن header و hero</li>
+                            </ul>
+                            <div class="day-resources">
+                                <a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Structuring_content" class="resource-tag" target="_blank">MDN HTML</a>
+                            </div>
+                        </div>
 
-    <div class="day">روز ۸ — JavaScript پایه</div>
-    <div class="day">روز ۹ — شرط‌ها و حلقه‌ها</div>
-    <div class="day">روز ۱۰ — DOM</div>
-    <div class="day">روز ۱۱ — Events</div>
-    <div class="day">روز ۱۲ — LocalStorage</div>
-    <div class="day">روز ۱۳ — تمرین</div>
-    <div class="day">روز ۱۴ — پروژه دوم</div>
+                        <div class="day">
+                            <div class="day-header">
+                                <span class="day-number">روز ۳</span>
+                                <span class="day-time">۱ ساعت</span>
+                            </div>
+                            <h4 style="margin-bottom: 0.5rem;">CSS پایه</h4>
+                            <ul class="day-tasks">
+                                <li>استایل‌دهی باکس‌ها</li>
+                                <li>تنظیم فونت و margin/padding</li>
+                            </ul>
+                            <div class="day-resources">
+                                <a href="https://www.freecodecamp.org/news/html-and-css-course/" class="resource-tag" target="_blank">freeCodeCamp</a>
+                            </div>
+                        </div>
 
-    <div class="day">روز ۱۵ — Responsive Design</div>
-    <div class="day">روز ۱۶ — Git و GitHub</div>
-    <div class="day">روز ۱۷ — API</div>
-    <div class="day">روز ۱۸ — Fetch</div>
-    <div class="day">روز ۱۹ — Error Handling</div>
-    <div class="day">روز ۲۰ — تمرین</div>
-    <div class="day">روز ۲۱ — پروژه سوم</div>
+                        <div class="day">
+                            <div class="day-header">
+                                <span class="day-number">روز ۴</span>
+                                <span class="day-time">۱ ساعت</span>
+                            </div>
+                            <h4 style="margin-bottom: 0.5rem;">Flexbox</h4>
+                            <ul class="day-tasks">
+                                <li>Layout هدر با Flexbox</li>
+                                <li>چیدمان hero</li>
+                            </ul>
+                            <div class="day-resources">
+                                <a href="https://developer.mozilla.org/docs/Web/CSS/CSS_Flexible_Box_Layout/Basic_Concepts" class="resource-tag" target="_blank">MDN Flexbox</a>
+                            </div>
+                        </div>
 
-    <div class="day">روز ۲۲ — معماری پروژه</div>
-    <div class="day">روز ۲۳ — Refactor</div>
-    <div class="day">روز ۲۴ — UI/UX</div>
-    <div class="day">روز ۲۵ — Performance</div>
-    <div class="day">روز ۲۶ — SEO پایه</div>
-    <div class="day">روز ۲۷ — تست نهایی</div>
-    <div class="day">روز ۲۸ — آماده‌سازی Deploy</div>
-    <div class="day">روز ۲۹ — Deploy روی GitHub Pages</div>
-    <div class="day">روز ۳۰ — جمع‌بندی و مسیر بعدی</div>
-  </div>
-</section>
+                        <div class="day">
+                            <div class="day-header">
+                                <span class="day-number">روز ۵</span>
+                                <span class="day-time">۱ ساعت</span>
+                            </div>
+                            <h4 style="margin-bottom: 0.5rem;">Grid</h4>
+                            <ul class="day-tasks">
+                                <li>بخش نمونه‌کارها با Grid</li>
+                                <li>شبکه‌بندی تصاویر</li>
+                            </ul>
+                            <div class="day-resources">
+                                <a href="https://developer.mozilla.org/docs/Web/CSS/CSS_Grid_Layout" class="resource-tag" target="_blank">MDN Grid</a>
+                            </div>
+                        </div>
 
-<!-- ================= CHECKLIST ================= -->
-<section id="checklist" class="section">
-  <h2 class="section-title">✅ چک‌لیست پیشرفت</h2>
+                        <div class="day" style="background: rgba(99, 102, 241, 0.1); border-color: var(--primary);">
+                            <div class="day-header">
+                                <span class="day-number">روز ۶</span>
+                                <span class="day-time" style="background: var(--primary); color: white;">۴ ساعت</span>
+                            </div>
+                            <h4 style="margin-bottom: 0.5rem;">انتشار اولیه 🚀</h4>
+                            <ul class="day-tasks">
+                                <li>Deploy در GitHub Pages یا Netlify</li>
+                                <li>گرفتن اسکرین‌شات</li>
+                                <li>ذخیرهٔ لینک</li>
+                            </ul>
+                            <div class="day-resources">
+                                <a href="https://docs.netlify.com/" class="resource-tag" target="_blank">Netlify</a>
+                                <a href="https://docs.github.com/get-started/quickstart/hello-world" class="resource-tag" target="_blank">GitHub</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-  <ul id="checklistItems" class="checklist">
-    <li data-id="0">GitHub ساخته شد</li>
-    <li data-id="1">HTML یاد گرفته شد</li>
-    <li data-id="2">CSS یاد گرفته شد</li>
-    <li data-id="3">JavaScript یاد گرفته شد</li>
-    <li data-id="4">پروژه اول ساخته شد</li>
-    <li data-id="5">Deploy انجام شد</li>
-  </ul>
-</section>
+                <div class="week">
+                    <div class="week-header" onclick="toggleWeek(this)">
+                        <div class="week-number">۲</div>
+                        <div>
+                            <div class="week-title">هفتهٔ دوم — زیبا و قابل فروش</div>
+                            <div class="week-goal">هدف: آماده‌سازی برای مشتری</div>
+                        </div>
+                    </div>
+                    <div class="days">
+                        <div class="day">
+                            <div class="day-header">
+                                <span class="day-number">روز ۷</span>
+                                <span class="day-time">۱ ساعت</span>
+                            </div>
+                            <h4 style="margin-bottom: 0.5rem;">Responsive</h4>
+                            <ul class="day-tasks">
+                                <li>اضافه کردن media queries</li>
+                                <li>تست در موبایل</li>
+                            </ul>
+                            <div class="day-resources">
+                                <a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/CSS_layout/Responsive_Design" class="resource-tag" target="_blank">MDN Responsive</a>
+                            </div>
+                        </div>
 
-<!-- ================= TIPS ================= -->
-<section id="tips" class="section">
-  <h2 class="section-title">💡 نکات طلایی</h2>
+                        <div class="day">
+                            <div class="day-header">
+                                <span class="day-number">روز ۸</span>
+                                <span class="day-time">۱ ساعت</span>
+                            </div>
+                            <h4 style="margin-bottom: 0.5rem;">UI Basics در Figma</h4>
+                            <ul class="day-tasks">
+                                <li>تعریف سه رنگ اصلی</li>
+                                <li>تعریف spacing</li>
+                                <li>ساخت mockup ساده</li>
+                            </ul>
+                            <div class="day-resources">
+                                <a href="https://www.figma.com/" class="resource-tag" target="_blank">Figma</a>
+                            </div>
+                        </div>
 
-  <div class="grid">
-    <div class="card">هر روز حتی ۳۰ دقیقه</div>
-    <div class="card">پروژه مهم‌تر از ویدیو</div>
-    <div class="card">کد دیگران را بخوان</div>
-    <div class="card">اشتباه کن و درستش کن</div>
-  </div>
-</section>
+                        <div class="day">
+                            <div class="day-header">
+                                <span class="day-number">روز ۹</span>
+                                <span class="day-time">۱ ساعت</span>
+                            </div>
+                            <h4 style="margin-bottom: 0.5rem;">فرم تماس</h4>
+                            <ul class="day-tasks">
+                                <li>ساخت فرم HTML</li>
+                                <li>اتصال به Formspree</li>
+                            </ul>
+                            <div class="day-resources">
+                                <a href="https://formspree.io/help" class="resource-tag" target="_blank">Formspree</a>
+                            </div>
+                        </div>
 
-</main>
+                        <div class="day">
+                            <div class="day-header">
+                                <span class="day-number">روز ۱۰</span>
+                                <span class="day-time">۱ ساعت</span>
+                            </div>
+                            <h4 style="margin-bottom: 0.5rem;">بهینه‌سازی تصاویر</h4>
+                            <ul class="day-tasks">
+                                <li>فشرده‌سازی با TinyPNG</li>
+                                <li>استفاده از placeholder</li>
+                            </ul>
+                            <div class="day-resources">
+                                <a href="https://tinypng.com/" class="resource-tag" target="_blank">TinyPNG</a>
+                            </div>
+                        </div>
 
-<footer class="footer">
-  ساخته‌شده با ❤️ — نسخه Light
-</footer>
+                        <div class="day">
+                            <div class="day-header">
+                                <span class="day-number">روز ۱۱</span>
+                                <span class="day-time">۱ ساعت</span>
+                            </div>
+                            <h4 style="margin-bottom: 0.5rem;">Git Basics</h4>
+                            <ul class="day-tasks">
+                                <li>git init</li>
+                                <li>۳ commit منطقی</li>
+                                <li>push به GitHub</li>
+                            </ul>
+                            <div class="day-resources">
+                                <a href="https://docs.github.com/get-started/quickstart/hello-world" class="resource-tag" target="_blank">GitHub</a>
+                            </div>
+                        </div>
 
-<script src="app.js"></script>
+                        <div class="day" style="background: rgba(99, 102, 241, 0.1); border-color: var(--primary);">
+                            <div class="day-header">
+                                <span class="day-number">روز ۱۲</span>
+                                <span class="day-time" style="background: var(--primary); color: white;">۴ ساعت</span>
+                            </div>
+                            <h4 style="margin-bottom: 0.5rem;">تکمیل لندینگ 🎯</h4>
+                            <ul class="day-tasks">
+                                <li>جمع‌آوری همهٔ نکات</li>
+                                <li>نوشتن README</li>
+                                <li>اسکرین‌شات قبل/بعد</li>
+                            </ul>
+                            <div style="margin-top: 0.5rem; padding: 0.5rem; background: rgba(16, 185, 129, 0.1); border-radius: 6px; font-size: 0.875rem; color: var(--success);">
+                                خروجی: لینک دمو، README، اسکرین‌شات
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="week">
+                    <div class="week-header" onclick="toggleWeek(this)">
+                        <div class="week-number">۳</div>
+                        <div>
+                            <div class="week-title">هفتهٔ سوم — JS پایه و تعامل</div>
+                            <div class="week-goal">هدف: دمو تعاملی</div>
+                        </div>
+                    </div>
+                    <div class="days">
+                        <div class="day">
+                            <div class="day-header">
+                                <span class="day-number">روز ۱۳</span>
+                                <span class="day-time">۱ ساعت</span>
+                            </div>
+                            <h4 style="margin-bottom: 0.5rem;">JS DOM Basics</h4>
+                            <ul class="day-tasks">
+                                <li>document.querySelector</li>
+                                <li>تغییر متن/کلاس‌ها</li>
+                            </ul>
+                            <div class="day-resources">
+                                <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide" class="resource-tag" target="_blank">MDN JS</a>
+                            </div>
+                        </div>
+
+                        <div class="day">
+                            <div class="day-header">
+                                <span class="day-number">روز ۱۴</span>
+                                <span class="day-time">۱ ساعت</span>
+                            </div>
+                            <h4 style="margin-bottom: 0.5rem;">Event Handling</h4>
+                            <ul class="day-tasks">
+                                <li>اضافه کردن event listener</li>
+                                <li>پیاده‌سازی مودال ساده</li>
+                            </ul>
+                            <div class="day-resources">
+                                <a href="https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener" class="resource-tag" target="_blank">MDN Events</a>
+                            </div>
+                        </div>
+
+                        <div class="day">
+                            <div class="day-header">
+                                <span class="day-number">روز ۱۵</span>
+                                <span class="day-time">۱ ساعت</span>
+                            </div>
+                            <h4 style="margin-bottom: 0.5rem;">Fetch API</h4>
+                            <ul class="day-tasks">
+                                <li>ارسال فرم با fetch</li>
+                                <li>نمایش پیام موفقیت</li>
+                            </ul>
+                            <div class="day-resources">
+                                <a href="https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API" class="resource-tag" target="_blank">MDN Fetch</a>
+                            </div>
+                        </div>
+
+                        <div class="day">
+                            <div class="day-header">
+                                <span class="day-number">روز ۱۶</span>
+                                <span class="day-time">۱ ساعت</span>
+                            </div>
+                            <h4 style="margin-bottom: 0.5rem;">استفاده از ChatGPT</h4>
+                            <ul class="day-tasks">
+                                <li>درخواست اسکریپت slider</li>
+                                <li>بررسی و اصلاح کد</li>
+                            </ul>
+                            <div style="margin-top: 0.5rem; font-size: 0.875rem; color: var(--warning);">
+                                ⚠️ همیشه خروجی را خودت تست کن
+                            </div>
+                        </div>
+
+                        <div class="day">
+                            <div class="day-header">
+                                <span class="day-number">روز ۱۷</span>
+                                <span class="day-time">۱ ساعت</span>
+                            </div>
+                            <h4 style="margin-bottom: 0.5rem;">ادغام JS و لندینگ</h4>
+                            <ul class="day-tasks">
+                                <li>اضافه کردن انیمیشن</li>
+                                <li>اسکرول نرم</li>
+                                <li>تست UX</li>
+                            </ul>
+                        </div>
+
+                        <div class="day" style="background: rgba(99, 102, 241, 0.1); border-color: var(--primary);">
+                            <div class="day-header">
+                                <span class="day-number">روز ۱۸</span>
+                                <span class="day-time" style="background: var(--primary); color: white;">۴ ساعت</span>
+                            </div>
+                            <h4 style="margin-bottom: 0.5rem;">تست موبایل و رفع باگ 🔧</h4>
+                            <ul class="day-tasks">
+                                <li>تست در چند گوشی</li>
+                                <li>تست در مرورگرهای مختلف</li>
+                                <li>بررسی performance</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="week">
+                    <div class="week-header" onclick="toggleWeek(this)">
+                        <div class="week-number">۴</div>
+                        <div>
+                            <div class="week-title">هفتهٔ چهارم — پورتفولیو و بازاریابی</div>
+                            <div class="week-goal">هدف: آماده‌سازی فروش</div>
+                        </div>
+                    </div>
+                    <div class="days">
+                        <div class="day">
+                            <div class="day-header">
+                                <span class="day-number">روز ۱۹</span>
+                                <span class="day-time">۱ ساعت</span>
+                            </div>
+                            <h4 style="margin-bottom: 0.5rem;">صفحه نمونه‌کار</h4>
+                            <ul class="day-tasks">
+                                <li>ساخت صفحه portfolio</li>
+                                <li>لینک به لندینگ</li>
+                            </ul>
+                        </div>
+
+                        <div class="day">
+                            <div class="day-header">
+                                <span class="day-number">روز ۲۰</span>
+                                <span class="day-time">۱ ساعت</span>
+                            </div>
+                            <h4 style="margin-bottom: 0.5rem;">نوشتن متن فروش</h4>
+                            <ul class="day-tasks">
+                                <li>متن معرفی خود</li>
+                                <li>لیست مزایا</li>
+                                <li>اطلاعات تماس</li>
+                            </ul>
+                        </div>
+
+                        <div class="day">
+                            <div class="day-header">
+                                <span class="day-number">روز ۲۱</span>
+                                <span class="day-time">۱ ساعت</span>
+                            </div>
+                            <h4 style="margin-bottom: 0.5rem;">لیست قیمت</h4>
+                            <ul class="day-tasks">
+                                <li>سه پکیج: پایه/استاندارد/نگهداری</li>
+                                <li>مشخص کردن زمان تحویل</li>
+                            </ul>
+                        </div>
+
+                        <div class="day">
+                            <div class="day-header">
+                                <span class="day-number">روز ۲۲</span>
+                                <span class="day-time">۱ ساعت</span>
+                            </div>
+                            <h4 style="margin-bottom: 0.5rem;">آماده‌سازی پیام مشتری</h4>
+                            <ul class="day-tasks">
+                                <li>۱۵ پیام آماده</li>
+                                <li>محلی‌سازی متن‌ها</li>
+                            </ul>
+                        </div>
+
+                        <div class="day">
+                            <div class="day-header">
+                                <span class="day-number">روز ۲۳</span>
+                                <span class="day-time">۱ ساعت</span>
+                            </div>
+                            <h4 style="margin-bottom: 0.5rem;">آپلود نهایی</h4>
+                            <ul class="day-tasks">
+                                <li>چک کردن همهٔ لینک‌ها</li>
+                                <li>تست فرم</li>
+                                <li>ذخیرهٔ لینک‌ها</li>
+                            </ul>
+                        </div>
+
+                        <div class="day" style="background: rgba(16, 185, 129, 0.1); border-color: var(--success);">
+                            <div class="day-header">
+                                <span class="day-number">روز ۲۴</span>
+                                <span class="day-time" style="background: var(--success); color: white;">۴ ساعت</span>
+                            </div>
+                            <h4 style="margin-bottom: 0.5rem;">ارسال پیام‌ها 📨</h4>
+                            <ul class="day-tasks">
+                                <li>۱۵ پیام ارزشی به کسب‌وکارها</li>
+                                <li>ثبت نتایج در اکسل</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="week">
+                    <div class="week-header" onclick="toggleWeek(this)">
+                        <div class="week-number" style="background: var(--gradient-2);">+</div>
+                        <div>
+                            <div class="week-title">روزهای ۲۵–۳۰ — جمع‌بندی و پیشرفت</div>
+                            <div class="week-goal">تمرین React/Node و آماده‌سازی قرارداد</div>
+                        </div>
+                    </div>
+                    <div class="days">
+                        <div class="day">
+                            <div class="day-header">
+                                <span class="day-number">روز ۲۵</span>
+                                <span class="day-time">۱ ساعت</span>
+                            </div>
+                            <h4 style="margin-bottom: 0.5rem;">تجمیع دموها</h4>
+                            <ul class="day-tasks">
+                                <li>مرتب‌سازی دموها</li>
+                                <li>قرار دادن در portfolio</li>
+                            </ul>
+                        </div>
+
+                        <div class="day">
+                            <div class="day-header">
+                                <span class="day-number">روز ۲۶</span>
+                                <span class="day-time">۱ ساعت</span>
+                            </div>
+                            <h4 style="margin-bottom: 0.5rem;">بازبینی UI/UX</h4>
+                            <ul class="day-tasks">
+                                <li>نظرخواهی از ۲ نفر</li>
+                                <li>اصلاحات کوچک</li>
+                            </ul>
+                        </div>
+
+                        <div class="day">
+                            <div class="day-header">
+                                <span class="day-number">روز ۲۷</span>
+                                <span class="day-time">۱ ساعت</span>
+                            </div>
+                            <h4 style="margin-bottom: 0.5rem;">شروع React</h4>
+                            <ul class="day-tasks">
+                                <li>مرور React Quick Start</li>
+                                <li>ساخت کامپوننت ساده</li>
+                            </ul>
+                            <div class="day-resources">
+                                <a href="https://react.dev/learn" class="resource-tag" target="_blank">React</a>
+                            </div>
+                        </div>
+
+                        <div class="day">
+                            <div class="day-header">
+                                <span class="day-number">روز ۲۸</span>
+                                <span class="day-time">۱ ساعت</span>
+                            </div>
+                            <h4 style="margin-bottom: 0.5rem;">تمرین Node.js</h4>
+                            <ul class="day-tasks">
+                                <li>ساخت Express server</li>
+                                <li>قبول فرم (بدون deploy)</li>
+                            </ul>
+                            <div class="day-resources">
+                                <a href="https://expressjs.com/" class="resource-tag" target="_blank">Express</a>
+                            </div>
+                        </div>
+
+                        <div class="day">
+                            <div class="day-header">
+                                <span class="day-number">روز ۲۹</span>
+                                <span class="day-time">۱ ساعت</span>
+                            </div>
+                            <h4 style="margin-bottom: 0.5rem;">نسخه نهایی</h4>
+                            <ul class="day-tasks">
+                                <li>نهایی کردن لینک‌ها</li>
+                                <li>آماده‌سازی price sheet</li>
+                            </ul>
+                        </div>
+
+                        <div class="day" style="background: rgba(236, 72, 153, 0.1); border-color: var(--secondary);">
+                            <div class="day-header">
+                                <span class="day-number">روز ۳۰</span>
+                                <span class="day-time" style="background: var(--secondary); color: white;">۴ ساعت</span>
+                            </div>
+                            <h4 style="margin-bottom: 0.5rem;">بازاریابی نهایی + قرارداد 🎉</h4>
+                            <ul class="day-tasks">
+                                <li>پیگیری تماس‌ها</li>
+                                <li>آماده‌سازی قرارداد ساده</li>
+                            </ul>
+                            <div style="margin-top: 0.5rem; padding: 0.5rem; background: rgba(236, 72, 153, 0.2); border-radius: 6px; font-size: 0.875rem; color: var(--secondary); font-weight: 600;">
+                                تبریک! شما الان یک توسعه‌دهنده وب هستید 🚀
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Checklist Section -->
+        <section id="checklist" class="content-section">
+            <h2 class="section-title"><span>✅</span>چک‌لیست پیشرفت</h2>
+            <p class="section-subtitle">تیک بزنید تا پیشرفت خود را ببینید</p>
+
+            <div class="checklist" id="checklistContainer">
+                <div class="checklist-item" onclick="toggleCheck(this)">
+                    <div class="checkbox"></div>
+                    <div class="checklist-text">راه‌اندازی GitHub و Figma</div>
+                </div>
+                <div class="checklist-item" onclick="toggleCheck(this)">
+                    <div class="checkbox"></div>
+                    <div class="checklist-text">ساخت اولین صفحه HTML</div>
+                </div>
+                <div class="checklist-item" onclick="toggleCheck(this)">
+                    <div class="checkbox"></div>
+                    <div class="checklist-text">یادگیری Flexbox و Grid</div>
+                </div>
+                <div class="checklist-item" onclick="toggleCheck(this)">
+                    <div class="checkbox"></div>
+                    <div class="checklist-text">انتشار اولین سایت (Deploy)</div>
+                </div>
+                <div class="checklist-item" onclick="toggleCheck(this)">
+                    <div class="checkbox"></div>
+                    <div class="checklist-text">طراحی Responsive</div>
+                </div>
+                <div class="checklist-item" onclick="toggleCheck(this)">
+                    <div class="checkbox"></div>
+                    <div class="checklist-text">اضافه کردن فرم تماس</div>
+                </div>
+                <div class="checklist-item" onclick="toggleCheck(this)">
+                    <div class="checkbox"></div>
+                    <div class="checklist-text">یادگیری Git Basics</div>
+                </div>
+                <div class="checklist-item" onclick="toggleCheck(this)">
+                    <div class="checkbox"></div>
+                    <div class="checklist-text">تکمیل لندینگ حرفه‌ای</div>
+                </div>
+                <div class="checklist-item" onclick="toggleCheck(this)">
+                    <div class="checkbox"></div>
+                    <div class="checklist-text">یادگیری JavaScript DOM</div>
+                </div>
+                <div class="checklist-item" onclick="toggleCheck(this)">
+                    <div class="checkbox"></div>
+                    <div class="checklist-text">اضافه کردن تعاملات (Events)</div>
+                </div>
+                <div class="checklist-item" onclick="toggleCheck(this)">
+                    <div class="checkbox"></div>
+                    <div class="checklist-text">استفاده از Fetch API</div>
+                </div>
+                <div class="checklist-item" onclick="toggleCheck(this)">
+                    <div class="checkbox"></div>
+                    <div class="checklist-text">تست و رفع باگ</div>
+                </div>
+                <div class="checklist-item" onclick="toggleCheck(this)">
+                    <div class="checkbox"></div>
+                    <div class="checklist-text">ساخت صفحه Portfolio</div>
+                </div>
+                <div class="checklist-item" onclick="toggleCheck(this)">
+                    <div class="checkbox"></div>
+                    <div class="checklist-text">نوشتن متن فروش</div>
+                </div>
+                <div class="checklist-item" onclick="toggleCheck(this)">
+                    <div class="checkbox"></div>
+                    <div class="checklist-text">تعیین لیست قیمت</div>
+                </div>
+                <div class="checklist-item" onclick="toggleCheck(this)">
+                    <div class="checkbox"></div>
+                    <div class="checklist-text">ارسال اولین پیام به مشتری</div>
+                </div>
+                <div class="checklist-item" onclick="toggleCheck(this)">
+                    <div class="checkbox"></div>
+                    <div class="checklist-text">شروع یادگیری React</div>
+                </div>
+                <div class="checklist-item" onclick="toggleCheck(this)">
+                    <div class="checkbox"></div>
+                    <div class="checklist-text">تمرین Node.js/Express</div>
+                </div>
+                <div class="checklist-item" onclick="toggleCheck(this)">
+                    <div class="checkbox"></div>
+                    <div class="checklist-text">دریافت اولین پروژه واقعی</div>
+                </div>
+            </div>
+
+            <button onclick="resetChecklist()" style="margin-top: 1rem; background: transparent; border: 1px solid var(--surface-light); color: var(--text-muted); padding: 0.75rem 1.5rem; border-radius: 8px; cursor: pointer; font-family: inherit; transition: all 0.2s;">
+                بازنشانی چک‌لیست
+            </button>
+        </section>
+
+        <!-- Tips Section -->
+        <section id="tips" class="content-section">
+            <h2 class="section-title"><span>💡</span>نکات طلایی</h2>
+            <p class="section-subtitle">چطور «با کمترین زمان» از هر منبع نتیجه بگیری</p>
+
+            <div class="tips-grid">
+                <div class="tip-card">
+                    <div class="tip-number">۱</div>
+                    <h3>ثبات بر زمان بیشتر</h3>
+                    <p>برای هر روز بیشتر از ۱–۱.۵ ساعت نگذار. «ثبات» مهم‌تر از «حجم» است.</p>
+                </div>
+
+                <div class="tip-card">
+                    <div class="tip-number">۲</div>
+                    <h3>تمرین تعاملی</h3>
+                    <p>از freeCodeCamp برای چالش‌های کوتاه استفاده کن. یادگیری فعال بهتر از مطالعهٔ منفعل است.</p>
+                </div>
+
+                <div class="tip-card">
+                    <div class="tip-number">۳</div>
+                    <h3>خروجی واقعی</h3>
+                    <p>برای هر بخش یک خروجی واقعی بساز: لندینگ، فرم، کامپوننت React. تئوری بدون عمل بی‌فایده است.</p>
+                </div>
+
+                <div class="tip-card">
+                    <div class="tip-number">۴</div>
+                    <h3>ترکیب فارسی و انگلیسی</h3>
+                    <p>اگر دنبال ویدیو فارسی هستی، اول یکی دو جلسهٔ Roocket یا Maktabkhooneh ببین، بعد تمرین کن.</p>
+                </div>
+
+                <div class="tip-card">
+                    <div class="tip-number">۵</div>
+                    <h3>استفاده از ChatGPT هوشمند</h3>
+                    <p>از AI برای تولید کد کمک بگیر، اما همیشه کد را بفهم و آن را خودت تست کن.</p>
+                </div>
+
+                <div class="tip-card">
+                    <div class="tip-number">۶</div>
+                    <h3>Deploy زود و مکرر</h3>
+                    <p>هر چیزی که ساختی را سریع Deploy کن. دیدن نتیجهٔ واقعی انگیزه‌ات را حفظ می‌کند.</p>
+                </div>
+            </div>
+
+            <div class="checklist" style="margin-top: 3rem;">
+                <h3 style="margin-bottom: 1rem; color: var(--accent);">منابع روزمره (Bookmark کن)</h3>
+                <div class="checklist-item" style="cursor: default;">
+                    <div class="checkbox" style="background: var(--primary); border-color: var(--primary);">✓</div>
+                    <div class="checklist-text">MDN Web Docs (HTML/CSS/JS)</div>
+                </div>
+                <div class="checklist-item" style="cursor: default;">
+                    <div class="checkbox" style="background: var(--primary); border-color: var(--primary);">✓</div>
+                    <div class="checklist-text">React Documentation</div>
+                </div>
+                <div class="checklist-item" style="cursor: default;">
+                    <div class="checkbox" style="background: var(--primary); border-color: var(--primary);">✓</div>
+                    <div class="checklist-text">freeCodeCamp</div>
+                </div>
+                <div class="checklist-item" style="cursor: default;">
+                    <div class="checkbox" style="background: var(--primary); border-color: var(--primary);">✓</div>
+                    <div class="checklist-text">Replit / CodeSandbox</div>
+                </div>
+                <div class="checklist-item" style="cursor: default;">
+                    <div class="checkbox" style="background: var(--primary); border-color: var(--primary);">✓</div>
+                    <div class="checklist-text">Netlify / Vercel Docs</div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="https://github.com" target="_blank">GitHub</a>
+                <a href="https://developer.mozilla.org" target="_blank">MDN</a>
+                <a href="https://www.freecodecamp.org" target="_blank">freeCodeCamp</a>
+                <a href="https://react.dev" target="_blank">React</a>
+            </div>
+            <p>ساخته‌شده با ❤️ برای توسعه‌دهندگان فارسی‌زبان</p>
+            <p style="margin-top: 0.5rem; font-size: 0.875rem;">© 2024 — موفق باشی! 🚀</p>
+        </div>
+    </footer>
+
+    <script>
+        // Tab Switching
+        function switchTab(tabId) {
+            // Hide all sections
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Remove active class from all tabs
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected section
+            document.getElementById(tabId).classList.add('active');
+            
+            // Add active class to clicked tab
+            event.currentTarget.classList.add('active');
+            
+            // Save to localStorage
+            localStorage.setItem('activeTab', tabId);
+        }
+
+        // Toggle Week Collapse
+        function toggleWeek(header) {
+            const days = header.nextElementSibling;
+            const isHidden = days.style.display === 'none';
+            
+            if (isHidden) {
+                days.style.display = 'grid';
+                header.style.opacity = '1';
+            } else {
+                days.style.display = 'none';
+                header.style.opacity = '0.7';
+            }
+        }
+
+        // Checklist Toggle
+        function toggleCheck(item) {
+            item.classList.toggle('checked');
+            updateProgress();
+            saveChecklist();
+        }
+
+        // Update Progress Bar
+        function updateProgress() {
+            const total = document.querySelectorAll('.checklist-item').length;
+            const checked = document.querySelectorAll('.checklist-item.checked').length;
+            const percentage = Math.round((checked / total) * 100);
+            
+            document.getElementById('progressBar').style.width = percentage + '%';
+            document.getElementById('progressText').textContent = percentage + '%';
+        }
+
+        // Save Checklist State
+        function saveChecklist() {
+            const checked = [];
+            document.querySelectorAll('.checklist-item').forEach((item, index) => {
+                if (item.classList.contains('checked')) {
+                    checked.push(index);
+                }
+            });
+            localStorage.setItem('checklist', JSON.stringify(checked));
+        }
+
+        // Load Checklist State
+        function loadChecklist() {
+            const saved = localStorage.getItem('checklist');
+            if (saved) {
+                const checked = JSON.parse(saved);
+                document.querySelectorAll('.checklist-item').forEach((item, index) => {
+                    if (checked.includes(index)) {
+                        item.classList.add('checked');
+                    }
+                });
+                updateProgress();
+            }
+        }
+
+        // Reset Checklist
+        function resetChecklist() {
+            if (confirm('آیا مطمئن هستید؟')) {
+                document.querySelectorAll('.checklist-item').forEach(item => {
+                    item.classList.remove('checked');
+                });
+                updateProgress();
+                saveChecklist();
+            }
+        }
+
+        // Load Saved Tab
+        function loadSavedTab() {
+            const savedTab = localStorage.getItem('activeTab');
+            if (savedTab) {
+                const tabButton = document.querySelector(`button[onclick="switchTab('${savedTab}')"]`);
+                if (tabButton) {
+                    tabButton.click();
+                }
+            }
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            loadChecklist();
+            loadSavedTab();
+            
+            // Add animation to cards on scroll
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            });
+            
+            document.querySelectorAll('.card, .day, .tip-card').forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(20px)';
+                el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                observer.observe(el);
+            });
+        });
+
+        // Keyboard Navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === '1') switchTab('resources');
+            if (e.key === '2') switchTab('packages');
+            if (e.key === '3') switchTab('daily');
+            if (e.key === '4') switchTab('checklist');
+           if (e.key === '5') switchTab('tips');
+       });
+    </script>
 </body>
-</html>
+  </html>
